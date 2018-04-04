@@ -1,1 +1,1 @@
-# Launch-It-Gradle-Plugin
+# Launch It Gradle Plugin
