@@ -14,7 +14,6 @@ import com.android.build.gradle.AppExtension
 import com.android.build.gradle.AppPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.internal.impldep.org.apache.http.util.TextUtils
 
 /**
  * @author Koen Van Looveren
@@ -38,13 +37,14 @@ open class BuildPlugin : Plugin<Project> {
         project.gradle.startParameter.taskNames.forEach {
             if (it.startsWith("deploy")) {
                 val name = it.removeFirst("deploy")
-                if (TextUtils.isEmpty(name)) return@forEach
+                if (name == "") return@forEach
                 val list = VersionBumpHelper.versionBump(name)
                 list.forEach {
                     project.setProperty(it.first, it.second.toString())
                     project.rootProject.setProperty(it.first, it.second.toString())
                 }
                 GitHelper.pushToOrigin()
+                VersionBumpHelper.resetBuildNr()
             }
         }
 
