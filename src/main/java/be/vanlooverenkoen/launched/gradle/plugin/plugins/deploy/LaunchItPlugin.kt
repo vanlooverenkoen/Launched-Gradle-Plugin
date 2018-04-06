@@ -34,7 +34,12 @@ class LaunchItPlugin : BuildSubPlugin {
                 it.sendMail = configuration.sendMail
                 it.public = configuration.public
                 it.apkFilePath = variant.outputs.first().outputFile.path
-                it.dependsOn(variant.assemble)
+                if (configuration.detektConfig != null) {
+                    it.dependsOn("detektCheck")
+                    it.dependsOn(variant.assemble).mustRunAfter("detektCheck")
+                } else {
+                    it.dependsOn(variant.assemble)
+                }
             }
             val key = variant.buildType.name
 
