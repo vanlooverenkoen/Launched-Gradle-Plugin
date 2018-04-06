@@ -26,3 +26,11 @@ Import in root gradle
 Apply the plugin by adding next command at the top of your app/build.gradle file
 
     apply plugin: 'launched-gradle-plugin'
+
+    LaunchedBuildConfig {
+        apiKey "your-api-key"
+        apiUrl "your-api-url"
+
+        detekt {
+        }
+    }
