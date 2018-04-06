@@ -1,14 +1,10 @@
 ### Launched Gradle Plugin ###
 
-**Before You Start**
-
-Supported Kotlin version 1.2.30 and above
-Make sure git is installed and added to your PATH
-Make sure the latest Android Build Tools are installed and added to your PATH (needed for aapt)
-
 **How To Use**
 
-Import in root gradle 
+Supported Kotlin version 1.2.30 and above
+
+Import in root gradle
 
     buildscript {
         repositories {
@@ -22,7 +18,7 @@ Import in root gradle
             ...
         }
     }
-  
+
 Apply the plugin by adding next command at the top of your app/build.gradle file
 
     apply plugin: 'launched-gradle-plugin'

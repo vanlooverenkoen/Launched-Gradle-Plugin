@@ -1,0 +1,128 @@
+buildscript {
+    ext.kotlin_version = '1.2.30'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+plugins {
+    id "com.jfrog.bintray" version "1.7.3"
+}
+
+def artifactVersion = '1.0.0'
+def artifactGroup = 'be.vanlooverenkoen.launched.gradle'
+group "$artifactGroup"
+version "$artifactVersion"
+
+//plugins
+apply plugin: 'java'
+apply plugin: 'kotlin'
+apply plugin: 'java-gradle-plugin'
+apply plugin: 'maven-publish'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from 'docs/README.txt'
+}
+
+repositories {
+    google()
+    mavenCentral()
+    jcenter()
+}
+
+def androidBuildTools = '3.0.1'
+def detektPlugin = '1.0.0.RC6-2'
+def okHttp = '3.9.1'
+def retrofit = '2.3.0'
+def gson = '2.8.2'
+def gsonConverter = '2.3.0'
+def junit = '4.11'
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    implementation "com.squareup.retrofit2:retrofit:${retrofit}"
+    implementation "com.squareup.okhttp3:okhttp:${okHttp}"
+    implementation "com.google.code.gson:gson:${gson}"
+    implementation "com.squareup.retrofit2:converter-gson:${gsonConverter}"
+
+    compile "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektPlugin"
+    compileOnly "com.android.tools.build:gradle:$androidBuildTools"
+
+    testCompile "junit:junit:$junit"
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    pkg {
+        repo = 'maven'
+        name = 'launched-gradle-plugin'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/vanlooverenkoen/Launched-Gradle-Plugin'
+
+        version {
+            name = "$artifactVersion"
+            desc = "Gradle plugin for Launched"
+            released = new Date()
+        }
+    }
+    publications = ['maven']
+}
+
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            name "Koen Van Looveren"
+            email "vanlooverenkoen.dev@gmail.com"
+            organization ""
+        }
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId "$artifactGroup"
+            artifactId 'plugin'
+            version "$artifactVersion"
+
+            from components.java
+
+            artifact sourceJar {
+                classifier "sources"
+            }
+            artifact javadocJar
+
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'Gradle plugin that will upload to Launched')
+                root.appendNode('name', 'launched-gradle-plugin')
+                root.appendNode('url', 'https://github.com/vanlooverenkoen/Launched-Gradle-Plugin')
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
