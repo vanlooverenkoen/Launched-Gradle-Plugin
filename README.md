@@ -1,4 +1,6 @@
-### Launched Gradle Plugin ###
+### Launched Gradle Plugin ### 
+
+[ ![Download](https://api.bintray.com/packages/vanlooverenkoen/maven/launched-gradle-plugin/images/download.svg) ](https://bintray.com/vanlooverenkoen/maven/launched-gradle-plugin/_latestVersion)
 
 **Before You Start**
 
@@ -13,7 +15,7 @@ Import in root gradle
     buildscript {
         repositories {
             ...
-            jcenter()
+            maven { url "https://dl.bintray.com/vanlooverenkoen/maven" }
             ...
         }
         dependencies {
