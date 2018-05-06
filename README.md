@@ -20,7 +20,7 @@ Import in root gradle
         }
         dependencies {
             ...
-            classpath "be.vanlooverenkoen.launched:plugin:{latest-version}"
+            classpath "be.vanlooverenkoen.launched.gradle:plugin:{latest-version}"
             ...
         }
     }
