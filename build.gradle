@@ -14,7 +14,7 @@ plugins {
     id "com.jfrog.bintray" version "1.7.3"
 }
 
-def artifactVersion = '1.0.0'
+def artifactVersion = '0.0.3'
 def artifactGroup = 'be.vanlooverenkoen.launched.gradle'
 group "$artifactGroup"
 version "$artifactVersion"

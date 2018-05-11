@@ -12,7 +12,7 @@ open class BuildExtension(private val project: Project) {
     var apiKey: String? = null
     var apiUrl: String? = null
     var releaseNotes: String = "No release notes were given"
-    var public: Boolean = false
+    var publicApp: Boolean = false
     var sendMail: Boolean = true
 
     var detektConfig: DetektExtension? = null

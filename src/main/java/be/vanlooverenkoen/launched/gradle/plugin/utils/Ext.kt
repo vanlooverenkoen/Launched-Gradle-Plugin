@@ -1,6 +1,5 @@
 package be.vanlooverenkoen.launched.gradle.plugin.utils
 
-import joptsimple.internal.Strings
 import java.util.regex.Pattern
 
 /**
@@ -47,6 +46,10 @@ inline fun String.removeLast(stringToRemove: String): String {
     return this.replaceLast(stringToRemove, "")
 }
 
+fun isNullOrEmpty(string: String?): Boolean {
+    return string == null || string.isEmpty()
+}
+
 fun isNotNullOrEmpty(string: String?): Boolean {
-    return !Strings.isNullOrEmpty(string)
+    return !isNullOrEmpty(string)
 }

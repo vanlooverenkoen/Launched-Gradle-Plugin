@@ -32,7 +32,7 @@ class LaunchItPlugin : BuildSubPlugin {
                 it.releaseNotes = configuration.releaseNotes
                 it.variantName = variant.name
                 it.sendMail = configuration.sendMail
-                it.public = configuration.public
+                it.public = configuration.publicApp
                 it.apkFilePath = variant.outputs.first().outputFile.path
                 if (configuration.detektConfig != null) {
                     it.dependsOn("detektCheck")
